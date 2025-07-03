@@ -1,0 +1,630 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif; /* Fuente más moderna */
+}
+
+body {
+    background-color: #f0f2f5; /* Un gris más suave */
+    color: #333;
+    line-height: 1.6;
+    scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+}
+
+/* Encabezado y navegación */
+header {
+    background-color: #1a5276;
+    color: white;
+    padding: 1rem 4rem; /* Más padding para un look más espacioso */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.escudo img {
+    border-radius: 50%;
+    display: block;
+    transition: transform 0.3s ease; /* Animación al pasar el mouse */
+}
+
+.escudo img:hover {
+    transform: scale(1.05);
+}
+
+.logo h1 span {
+    color: #f39c12;
+}
+
+.logo h1 {
+    font-weight: bold;
+    font-size: 2rem; /* Tamaño de fuente ligeramente más grande */
+    letter-spacing: 2px;
+    color: #fafaf8;
+}
+
+nav .menu {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Más espacio entre elementos del menú */
+}
+
+nav .menu li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500; /* Ligeramente más grueso */
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav .menu li a:hover {
+    background-color: #f39c12; /* Color de acento al pasar el mouse */
+    color: #1a5276;
+}
+
+/* Sección Hero (Principal) con corte diagonal */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Asegura que los hijos ocupen toda la altura */
+    padding: 0; /* Quitamos el padding aquí y lo ponemos dentro de los elementos para el corte */
+    background: linear-gradient(to right, #e0eafc, #cfdef3); /* Gradiente suave de fondo */
+    min-height: 70vh; /* Altura mínima para que sea impactante */
+    overflow: hidden; /* Importante para que el clip-path funcione correctamente */
+}
+
+.hero-content {
+    flex: 1; /* Ocupa la mitad del espacio disponible */
+    max-width: 50%; /* Asegura que no se expanda demasiado */
+    text-align: left;
+    padding: 5rem 4rem 5rem 4rem; /* Padding interno para el contenido */
+    background-color: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente para el contenido */
+    position: relative; /* Necesario para el clip-path */
+    clip-path: polygon(0 0, 100% 0, calc(100% - 80px) 100%, 0 100%); /* Corte diagonal hacia adentro */
+    z-index: 2; /* Asegura que esté por encima del fondo del hero */
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1); /* Sombra en el borde cortado */
+    display: flex; /* Para centrar el contenido verticalmente */
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-content h2 {
+    font-size: 3.5rem; /* Título más grande e impactante */
+    color: #1a5276;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1.3rem; /* Texto más legible */
+    color: #555;
+    line-height: 1.8;
+}
+
+.hero-content p span {
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.hero-image-placeholder {
+    flex: 1; /* Ocupa la otra mitad del espacio disponible */
+    max-width: 50%; /* Asegura que no se expanda demasiado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd; /* Color de fondo para el placeholder si la imagen no carga */
+    height: 100%; /* Ajusta a la altura del hero */
+    min-height: 70vh; /* Asegura que tenga la misma altura que el hero */
+    position: relative; /* Necesario para el clip-path */
+    clip-path: polygon(80px 0, 100% 0, 100% 100%, 0 100%); /* Corte diagonal complementario */
+    z-index: 1; /* Asegura que esté detrás del contenido del hero */
+    overflow: hidden; /* Asegura que la imagen no se desborde del clip-path */
+    color: #777; /* Color del texto del placeholder */
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); /* Sombra en el borde cortado */
+}
+
+.hero-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    display: block;
+}
+
+
+/* Sección de Búsqueda (Sistema de Gestión) */
+.busqueda-alumnos {
+    background-color: #f8f9fa; /* Fondo claro para la sección */
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.busqueda-container {
+    max-width: 700px; /* Ancho fijo para el contenedor del formulario */
+    margin: 0 auto; /* Centrar el contenedor */
+    background-color: white;
+    padding: 3rem;
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más definida */
+    text-align: left; /* Alinea el contenido interno a la izquierda */
+}
+
+.busqueda-container h2 {
+    font-size: 2.5rem;
+    color: #1a5276;
+    margin-bottom: 2rem;
+    text-align: center; /* Centrar el título dentro del contenedor */
+}
+
+.busqueda-form label {
+    display: block; /* La etiqueta ocupa su propia línea */
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.input-group {
+    display: flex; /* Permite que el input y el botón estén en la misma línea */
+    gap: 1rem; /* Espacio entre el input y el botón */
+    align-items: center; /* Alinea verticalmente */
+}
+
+.busqueda-input {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px; /* Bordes redondeados */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.busqueda-input:focus {
+    border-color: #1a5276;
+    box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.2); /* Sombra al enfocar */
+}
+
+.btn-buscar {
+    background-color: #f39c12; /* Color de acento */
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+.btn-buscar:hover {
+    background-color: #e67e22; /* Tono más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Pequeño efecto de levantamiento */
+}
+
+/* Secciones generales (Ciclos, Nosotros, Especialidades, Contacto) */
+section {
+    padding: 6rem 4rem; /* Padding uniforme para todas las secciones */
+    text-align: center;
+    background-color: white; /* Fondo blanco por defecto */
+    margin-bottom: 0.5rem; /* Pequeño espacio entre secciones */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+}
+
+section:nth-child(even) { /* Para alternar colores de fondo si se desea */
+    background-color: #f8f9fa;
+}
+
+section h2 {
+    font-size: 3rem;
+    color: #1a5276;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+section h2::after { /* Subrayado decorativo */
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #f39c12;
+    border-radius: 2px;
+}
+
+/* Estilos para las tarjetas (cards) */
+ .especialidad-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem; /* Mayor espacio entre tarjetas */
+    margin-top: 3rem;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: calc(33% - 2.5rem); /* 3 tarjetas por fila con espacio */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 250px; /* Altura mínima para uniformidad */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    color: #1a5276;
+    margin-bottom: 1rem;
+}
+
+.card p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+
+/* Sección Contacto */
+.contacto-info {
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contacto-info p i {
+    margin-right: 10px;
+    color: #1a5276;
+}
+
+.mapa {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mapa iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
+}
+
+/* Pie de página */
+footer {
+    background-color: #2c3e50; /* Color oscuro para el footer */
+    color: white;
+    padding: 4rem 0;
+}
+
+.footer-contenido {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 4rem;
+    margin-bottom: 3rem;
+}
+
+.footer-info, .footer-enlaces, .footer-contacto, .footer-horarios {
+    flex: 1; /* Distribuye el espacio de manera más equitativa */
+    min-width: 250px; /* Ancho mínimo para evitar que se colapsen */
+    margin: 1.5rem;
+    text-align: left;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.1); /* Fondo semitransparente */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-info .logo-container {
+    margin-bottom: 1rem;
+}
+
+.footer-info p {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.footer-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex: 2; /* Permite que estas secciones ocupen más espacio */
+    gap: 2rem;
+}
+
+.footer-enlaces h3, .footer-contacto h3, .footer-horarios h3 {
+    font-size: 1.4rem;
+    color: #f39c12; /* Color de acento para títulos */
+    margin-bottom: 1.5rem;
+}
+
+.footer-enlaces ul, .footer-horarios ul {
+    list-style: none;
+}
+
+.footer-enlaces ul li, .footer-horarios ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-enlaces ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-enlaces ul li a:hover {
+    color: #f39c12;
+}
+
+.footer-contacto p {
+    margin-bottom: 0.8rem;
+    color: #ccc;
+}
+
+.footer-contacto p i {
+    margin-right: 10px;
+    color: #f39c12;
+}
+
+.footer-redes {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-redes .red-social {
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.footer-redes .red-social:hover {
+    color: #f39c12;
+    transform: translateY(-3px);
+}
+
+.footer-legal {
+    background-color: #1a252f; /* Fondo más oscuro para la sección legal */
+    text-align: center;
+    padding: 1.5rem 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legal-links {
+    margin-bottom: 1rem;
+}
+
+.legal-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+    color: #f39c12;
+}
+
+.copyright p {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+/* Media Queries para Responsive Design */
+@media (max-width: 1024px) {
+    header {
+        padding: 1rem 2rem;
+    }
+
+    .hero {
+        flex-direction: column; /* Apila el contenido y la imagen en columnas */
+        padding: 4rem 2rem; /* Agregamos padding al hero para tablets */
+        text-align: center;
+        min-height: unset; /* Deja que la altura se ajuste al contenido */
+        overflow: visible; /* Permite que el contenido se vea completo */
+    }
+
+    .hero-content, .hero-image-placeholder {
+        max-width: 100%; /* Ocupan todo el ancho disponible */
+        padding-right: 0;
+        clip-path: none; /* Desactivar clip-path */
+        box-shadow: none; /* Eliminar sombra del corte */
+        padding: 2rem; /* Ajustar padding para tablets */
+        border-radius: 10px; /* Restaurar bordes redondeados completos */
+        background-color: white; /* Fondo sólido para tablets */
+    }
+
+    .hero-image-placeholder {
+        margin-top: 2rem;
+        height: 300px; /* Altura fija para tablets */
+        min-height: unset;
+    }
+
+    .hero-content h2 {
+        font-size: 2.8rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+
+    .card {
+        width: calc(50% - 2.5rem); /* 2 tarjetas por fila en tablets */
+    }
+
+    .footer-contenido {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .footer-info, .footer-enlaces, .footer-contacto, .footer-horarios {
+        min-width: unset;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .footer-sections {
+        flex-direction: column;
+        width: 100%;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    nav {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    nav .menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    nav .menu li a {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
+    }
+
+    .hero {
+        padding: 3rem 1rem;
+    }
+
+    .hero-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .busqueda-container {
+        padding: 2rem;
+    }
+
+    .busqueda-container h2 {
+        font-size: 2rem;
+    }
+
+    .input-group {
+        flex-direction: column; /* Apila el input y el botón en móviles */
+        gap: 0.8rem;
+    }
+
+    .busqueda-input, .btn-buscar {
+        width: 100%;
+    }
+
+    section {
+        padding: 4rem 1rem;
+    }
+
+    section h2 {
+        font-size: 2.5rem;
+    }
+
+    .card {
+        width: 100%; /* Una tarjeta por fila en móviles */
+    }
+
+    .nosotros-content {
+        font-size: 1rem;
+    }
+
+    .contacto-info {
+        font-size: 1rem;
+    }
+
+    .mapa iframe {
+        height: 300px;
+    }
+
+    .footer-legal {
+        padding: 1rem;
+    }
+
+    .legal-links a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-image-placeholder {
+        height: 250px;
+        font-size: 1.2rem;
+    }
+
+    .busqueda-container h2 {
+        font-size: 1.8rem;
+    }
+
+    .busqueda-form label {
+        font-size: 1rem;
+    }
+
+    .busqueda-input, .btn-buscar {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+    }
+
+    .card p {
+        font-size: 0.95rem;
+    }
+}

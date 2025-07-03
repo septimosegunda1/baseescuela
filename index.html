@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E.E.S.T N°5 - Vanguardia y Educación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e; /* Azul oscuro casi negro */
+            --primary-light: #e0f2f7; /* Blanco azulado */
+            --accent-orange: #ff6b35; /* Naranja vibrante */
+            --accent-green: #00e676; /* Verde lima vibrante */
+            --text-dark: #333333;
+            --text-light: #f0f0f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--primary-light);
+            scroll-behavior: smooth;
+        }
+
+        /* Contenedor general para centrar contenido */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Minimalista */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: transparent; /* Transparente inicialmente */
+            padding: 1.2rem 0;
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--primary-dark); /* Fondo oscuro al hacer scroll */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-light); /* Color del logo siempre claro */
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+        }
+
+        nav a {
+            color: var(--text-light); /* Color de los links siempre claro */
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            padding-bottom: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section - Minimalista */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--primary-dark); /* Fondo oscuro sólido */
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        /* Imagen de fondo única para el Hero */
+        .hero-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2; /* Menor opacidad para un look más sutil */
+            filter: grayscale(100%); /* Desaturada para minimalismo */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeInScale 1s ease-out forwards;
+        }
+
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content .highlight {
+            color: var(--accent-orange); /* Color vibrante */
+            display: block; /* Para que ocupe su propia línea si es muy largo */
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .btn-main {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--accent-green);
+            color: var(--primary-dark); /* Texto oscuro sobre botón claro */
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-5px);
+            background: var(--accent-orange); /* Cambia de color al hover */
+            color: var(--text-light);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Nuevo Banner de Información con forma de > */
+        .info-banner {
+            padding: 0; /* Remueve padding para que las secciones internas controlen el espacio */
+            background: var(--primary-dark); /* Fondo principal del banner */
+            color: var(--text-light);
+            display: flex; /* Utiliza flexbox para las dos columnas */
+        }
+
+        .info-banner-content {
+            display: flex;
+            width: 100%; /* Ocupa todo el ancho del banner */
+            min-height: 250px; /* Reduje la altura mínima del banner */
+            position: relative; /* Para el posicionamiento del clip-path */
+            border-radius: 15px; /* Añadido borde redondeado general */
+            overflow: hidden; /* Asegura que el contenido respete el borde redondeado */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            margin: 2rem 0; /* Añadido margen superior e inferior para separarlo de otras secciones */
+        }
+
+        .banner-text {
+            flex: 1; /* Ocupa la mitad del espacio disponible */
+            background: linear-gradient(to right, rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.7)); /* Fondo oscuro semitransparente */
+            padding: 2rem; /* Reduje el padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: left; /* Alineación del texto a la izquierda */
+        }
+
+        .banner-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem; /* Reduje el tamaño del título */
+            font-weight: 700;
+            margin-bottom: 0.8rem; /* Reduje el margen */
+            color: var(--accent-orange); /* Color del título más llamativo */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-text p {
+            font-size: 0.9rem; /* Reduje el tamaño del párrafo */
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem; /* Espacio antes del botón */
+        }
+
+        .banner-image-container {
+            flex: 1; /* Ocupa la otra mitad del espacio */
+            background-color: var(--primary-light); /* Fondo claro para la imagen */
+            position: relative;
+            overflow: hidden;
+            /* Quitamos el clip-path para un banner rectangular */
+            /* clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 15% 100%, 0% 50%); */
+        }
+
+        .banner-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9); /* Ligeramente más oscuro para mejor contraste con el texto */
+        }
+
+        /* Sección de Consulta DNI */
+        .dni-search {
+            padding: 6rem 0;
+            background: var(--primary-dark);
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .dni-search .section-header h2 {
+            color: var(--text-light);
+        }
+
+        .dni-search .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem; /* Added margin for better spacing */
+        }
+
+        .dni-form-container {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dni-input-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .dni-input {
+            flex: 1;
+            max-width: 300px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .dni-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .dni-input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-dni-search {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent-orange);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-dni-search:hover {
+            background: var(--accent-green);
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Sección de Especialidades */
+        .especialidades {
+            padding: 6rem 0;
+            background: var(--primary-light);
+            text-align: center;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--accent-orange);
+            border-radius: 2px;
+        }
+
+        .especialidades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .especialidad-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .especialidad-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .especialidad-icon {
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            margin-bottom: 1.2rem;
+        }
+
+        .especialidad-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.8rem;
+        }
+
+        .especialidad-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+
+        /* Contact Section - Profesional y Estética */
+        .contact {
+            padding: 6rem 0; /* Aumentado el padding para más espacio */
+            background: var(--primary-dark); /* Fondo oscuro para contraste */
+            color: var(--text-light); /* Texto claro sobre fondo oscuro */
+            position: relative;
+            overflow: hidden; /* Para contener los posibles elementos decorativos */
+        }
+
+        .contact .container {
+            position: relative;
+            z-index: 2; /* Asegura que el contenido esté por encima del fondo */
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr; /* Info y Mapa, mapa un poco más grande */
+            gap: 4rem; /* Buen espaciado entre columnas */
+            align-items: center;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05); /* Fondo semitransparente para la tarjeta de info */
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); /* Efecto de desenfoque para modernidad */
+        }
+
+        .contact-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem; /* Tamaño de título más profesional */
+            font-weight: 700;
+            margin-bottom: 2.5rem; /* Más espacio */
+            color: var(--accent-orange); /* Título en naranja para destacar */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem; /* Espaciado cómodo */
+            margin-bottom: 1.5rem; /* Buen espaciado entre items */
+            color: rgba(255, 255, 255, 0.85); /* Texto más claro */
+        }
+
+        .contact-item i {
+            font-size: 1.6rem; /* Iconos un poco más grandes */
+            color: var(--accent-green); /* Iconos en verde para contraste */
+            width: 25px; /* Ancho fijo para alinear iconos */
+            text-align: center;
+        }
+
+        .contact-item div {
+            font-size: 1.05rem; /* Tamaño de fuente legible */
+        }
+
+        .contact-item strong {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            color: var(--text-light); /* Texto fuerte en blanco */
+        }
+
+        .contact-map {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-map iframe {
+            width: 100%;
+            height: 400px; /* Altura generosa para el mapa */
+            border: none;
+            filter: grayscale(100%) invert(0%); /* Desaturado e invertido para combinar con el fondo oscuro */
+        }
+
+        /* Footer Minimalista */
+        footer {
+            background: var(--primary-dark);
+            padding: 2.5rem 0 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.4rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .especialidades-grid,
+            .contact-content,
+            .info-banner-content {
+                flex-direction: column; /* Columna única en móviles */
+                text-align: center;
+                min-height: auto; /* Ajusta altura en móviles */
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+
+            .dni-input-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dni-input {
+                max-width: 100%;
+            }
+
+            /* Ajustes para el banner responsivo */
+            .info-banner {
+                padding: 2rem 0; /* Menos padding vertical en móviles */
+            }
+            .info-banner-content {
+                flex-direction: column;
+                margin: 1rem 0; /* Menos margen en móviles */
+                border-radius: 10px;
+            }
+            .banner-image-container {
+                width: 100%;
+                height: 150px; /* Altura fija para la imagen en móviles, ajustada */
+            }
+            .banner-text {
+                padding: 1.5rem; /* Menos padding en móviles */
+                text-align: center; /* Centrar texto en móviles */
+            }
+            .banner-text h2 {
+                font-size: 1.6rem; /* Reduje el tamaño del título en móviles */
+            }
+            .banner-text p {
+                font-size: 0.85rem; /* Reduje el tamaño del párrafo en móviles */
+            }
+
+            /* Ajustes para la sección de contacto responsiva */
+            .contact {
+                padding: 4rem 0; /* Ajustado en móviles */
+            }
+            .contact-info {
+                padding: 2rem; /* Menos padding en tarjeta de info para móviles */
+            }
+            .contact-info h2 {
+                font-size: 2rem; /* Tamaño de título más pequeño en móviles */
+            }
+            .contact-item {
+                margin-bottom: 1rem; /* Espaciado adecuado en móviles */
+                justify-content: center; /* Centrar items en móviles */
+            }
+            .contact-map iframe {
+                height: 300px; /* Altura adecuada en móviles */
+            }
+        }
+        /* No se requiere esta regla, se elimina para evitar conflictos */
+        /* .seccion#dni-consulta{
+            padding: 20px;
+            margin-left: -1190px;
+        } */
+
+        /* AÑADIDO PARA LA ESTÉTICA DE INFO-BANNER */
+        .info-banner-content {
+            background-image: linear-gradient(135deg, var(--primary-dark) 0%, #30304a 100%); /* Degradado sutil */
+            border-radius: 15px; /* Ajuste del borde redondeado general */
+            overflow: hidden; /* Asegura que el contenido no se salga de los bordes redondeados */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Borde sutil */
+            display: flex; /* Asegura que los hijos estén en fila (texto e imagen) */
+            align-items: center; /* Centra verticalmente los elementos */
+        }
+
+        .banner-text {
+            background: none; /* Quitamos el fondo sólido del texto para que el degradado general se vea */
+            padding: 2rem; /* Ajuste del padding */
+            text-align: left;
+        }
+
+        .banner-text h2 {
+            font-size: 2.2rem; /* Título más grande, ajustado para ser más pequeño */
+            line-height: 1.2;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            color: var(--accent-orange); /* Título en color акцентный */
+        }
+
+        .banner-text p {
+            font-size: 1rem; /* Ajustado el tamaño de la fuente del párrafo */
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.8rem; /* Ajustado el margen superior */
+            margin-bottom: 1.5rem; /* Más espacio antes del botón */
+            max-width: 90%; /* Limita el ancho del párrafo para mejor legibilidad, ajustado */
+        }
+
+        .banner-image-container {
+            background-color: transparent; /* Fondo transparente */
+            box-shadow: none; /* Quitamos la sombra específica de la imagen */
+            overflow: hidden;
+            flex-shrink: 0; /* Evita que la imagen se encoja demasiado */
+            border-radius: 0 15px 15px 0; /* Borde redondeado solo a la derecha */
+            max-width: 40%; /* Ocupa hasta la mitad del ancho, ajustado para ser más pequeño */
+            height: auto;
+        }
+
+        .banner-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9); /* Ligeramente más oscuro */
+        }
+        /* FIN AÑADIDO PARA LA ESTÉTICA DE INFO-BANNER */
+
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="Escudo.jpg" alt="Logo E.E.S.T N°5">
+                <h1>E.E.S<span>.T N°5</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#info-adicional">Inscripción</a></li>
+                    <li><a href="#dni-consulta-nav">Consulta DNI</a></li>
+                    <li><a href="#especialidades">Especialidades</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="dni-search" id="inicio">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Sistema de Gestión de Materias Previas</h2>
+                    <p>
+                        Este sistema te permite consultar de manera rápida y segura tu estado académico, incluyendo la información sobre materias previas.
+                        Simplemente ingresa tu número de DNI para acceder a tus datos y mantenerte informado sobre tu progreso educativo.
+                    </p>
+                </div>
+                <div class="dni-form-container">
+                    <form action="buscar.php" method="post">
+                        <div class="dni-input-group">
+                            <input type="text" name="dni" class="dni-input" placeholder="Ingresa tu DNI (solo números)" pattern="^[0-9]{7,8}$" inputmode="numeric" required>
+                            <button type="submit" class="btn-dni-search">
+                                <i class="fas fa-search"></i> Consultar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-banner" id="info-adicional">
+            <div class="info-banner-content">
+                <div class="banner-text container">
+                    <h2>Tu Futuro Comienza Aquí</h2>
+                    <p>
+                        Descubre un espacio de aprendizaje innovador en el corazón de Ranelagh. En la E.E.S.T N°5, te brindamos las herramientas y la inspiración para alcanzar tus metas. ¡Inscríbete hoy y comienza a construir el futuro que imaginaste!
+                    </p>
+                    <a href="#contacto" class="btn-main">Inscríbete Ahora <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="banner-image-container">
+                    <img src="frente.jpg" alt="Fachada moderna de la escuela">
+                </div>
+            </div>
+        </section>
+
+        <section class="especialidades" id="especialidades">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nuestras Especialidades</h2>
+                    <p>Formación técnica de vanguardia para el mercado laboral.</p>
+                </div>
+                <div class="especialidades-grid">
+                    <div class="especialidad-card">
+                        <div class="especialidad-icon"><i class="fas fa-code"></i></div>
+                        <h3>Programación</h3>
+                        <p>Desarrollo de software, aplicaciones y soluciones digitales.</p>
+                    </div>
+                    <div class="especialidad-card">
+                        <div class="especialidad-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Informática</h3>
+                        <p>Redes, sistemas operativos, ciberseguridad y gestión de datos.</p>
+                    </div>
+                    <div class="especialidad-card">
+                        <div class="especialidad-icon"><i class="fas fa-drafting-compass"></i></div>
+                        <h3>Construcciones</h3>
+                        <p>Diseño arquitectónico, planificación y ejecución de obras civiles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contacto">
+            <div class="container contact-content">
+                <div class="contact-info">
+                    <h2>Contactanos</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Dirección</strong><br>
+                             C. 368 Esq 316, B1886 Ranelagh, Provincia de Buenos Aires
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Teléfono</strong><br>
+                            (011) 2761-3366
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            info@eestn5.edu.ar
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Horarios de atencion</strong><br>
+                            Lunes a Viernes: 8:00 - 11:00 hs (Por la mañana)
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <h3>Encuentranos Aqui :</h3>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.688369590884!2d-58.19007162431202!3d-34.7886196728885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a3298bdd7b6e03%3A0x9b23e70f725df856!2sEscuela%20de%20Educaci%C3%B3n%20Secundaria%20T%C3%A9cnica%20(E.E.S.T.)%20N%C2%BA5!5e0!3m2!1ses-419!2sus!4v1750723800825!5m2!1ses-419!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <p>© 2025 E.E.S.T N°5. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - EEST N°5</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos base heredados de la página principal */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #1a5276;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-weight: bold;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: #fafaf8;
+        }
+
+        .logo h1 span {
+            color: #f39c12;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-logout {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+
+        /* Contenedor principal */
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(to right, #e8f8f5, #d1f2eb);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .admin-header h2 {
+            color: #1a5276;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        /* Pestañas */
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            background-color: #ecf0f1;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab.active {
+            background-color: #1a5276;
+            color: white;
+        }
+
+        .tab:hover {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .tab.active:hover {
+            background-color: #1a5276;
+        }
+
+        /* Contenido de pestañas */
+        .tab-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 500px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a5276;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #1a5276;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #154360;
+        }
+
+        .btn-success {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219a52;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Tabla */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            background-color: #1a5276;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            background-color: #1a5276;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .close {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .close:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        /* Búsqueda */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+        }
+
+        /* Estados */
+        .estado {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .estado-pendiente {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .estado-aprobada {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .estado-desaprobada {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Alertas */
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+
+        /* Estadísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid;
+        }
+
+        .stat-card.primary {
+            border-left-color: #1a5276;
+        }
+
+        .stat-card.success {
+            border-left-color: #27ae60;
+        }
+
+        .stat-card.warning {
+            border-left-color: #f39c12;
+        }
+
+        .stat-card.danger {
+            border-left-color: #e74c3c;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 0 1rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .table-container {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <h1>E.E.S<span>.T N°5</span> - Administración</h1>
+            </div>
+        </div>
+        <div class="admin-info">
+            <span><i class="fas fa-user"></i> Administrador</span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Salir
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h2>Sistema de Gestión de Materias Previas</h2>
+            <p>Panel de administración para la gestión de estudiantes y materias previas</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-number" id="totalEstudiantes">0</div>
+                <div class="stat-label">Total Estudiantes</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number" id="totalPrevias">0</div>
+                <div class="stat-label">Materias Previas</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-number" id="totalAprobadas">0</div>
+                <div class="stat-label">Aprobadas</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number" id="totalPendientes">0</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'estudiantes')">
+                <i class="fas fa-users"></i> Estudiantes
+            </button>
+            <button class="tab" onclick="openTab(event, 'materias')">
+                <i class="fas fa-book"></i> Materias Previas
+            </button>
+            <button class="tab" onclick="openTab(event, 'reportes')">
+                <i class="fas fa-chart-bar"></i> Reportes
+            </button>
+        </div>
+
+        <div class="tab-content">
+            <!-- Pestaña Estudiantes -->
+            <div id="estudiantes" class="tab-pane active">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>Gestión de Estudiantes</h3>
+                    <button class="btn btn-primary" onclick="openModal('modalEstudiante')">
+                        <i class="fas fa-plus"></i> Nuevo Estudiante
+                    </button>
+                </div>
+
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchEstudiantes" placeholder="Buscar por DNI, nombre o apellido..." onkeyup="filterEstudiantes()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="tablaEstudiantes">
+                        <thead>
+                            <tr>
+                                <th>DNI</th>
+                                <th>Apellido y Nombre</th>
+                                <th>Curso</th>
+                                <th>Ciclo</th>
+                                <th>Materias Previas</th>
+                                <th>Promedio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pestaña Materias Previas -->
+            <div id="materias" class="tab-pane">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3>Gestión de Materias Previas</h3>
+                    <button class="btn btn-primary" onclick="openModal('modalMateria')">
+                        <i class="fas fa-plus"></i> Nueva Materia Previa
+                    </button>
+                </div>
+
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchMaterias" placeholder="Buscar por DNI, materia o estado..." onkeyup="filterMaterias()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="tablaMaterias">
+                        <thead>
+                            <tr>
+                                <th>DNI Estudiante</th>
+                                <th>Estudiante</th>
+                                <th>Materia</th>
+                                <th>Año</th>
+                                <th>Fecha Registro</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pestaña Reportes -->
+            <div id="reportes" class="tab-pane">
+                <h3>Reportes y Estadísticas</h3>
+                <div style="margin-top: 2rem;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Filtrar por Curso:</label>
+                            <select id="filtroCurso" onchange="generarReporte()">
+                                <option value="">Todos los cursos</option>
+                                <option value="1">1° Año</option>
+                                <option value="2">2° Año</option>
+                                <option value="3">3° Año</option>
+                                <option value="4">4° Año</option>
+                                <option value="5">5° Año</option>
+                                <option value="6">6° Año</option>
+                                <option value="7">7° Año</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Filtrar por Estado:</label>
+                            <select id="filtroEstado" onchange="generarReporte()">
+                                <option value="">Todos los estados</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="aprobada">Aprobada</option>
+                                <option value="desaprobada">Desaprobada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="exportarReporte()">
+                        <i class="fas fa-download"></i> Exportar Reporte
+                    </button>
+                </div>
+
+                <div id="reporteResultados" style="margin-top: 2rem;">
+                    <!-- Los resultados del reporte se mostrarán aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estudiante -->
+    <div id="modalEstudiante" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="tituloModalEstudiante">Nuevo Estudiante</h3>
+                <span class="close" onclick="closeModal('modalEstudiante')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="formEstudiante">
+                    <input type="hidden" id="estudianteId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dni">DNI *</label>
+                            <input type="text" id="dni" required maxlength="8" pattern="[0-9]*">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido *</label>
+                            <input type="text" id="apellido" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre *</label>
+                            <input type="text" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="curso">Curso *</label>
+                            <select id="curso" required>
+                                <option value="">Seleccionar curso</option>
+                                <option value="1">1° Año</option>
+                                <option value="2">2° Año</option>
+                                <option value="3">3° Año</option>
+                                <option value="4">4° Año</option>
+                                <option value="5">5° Año</option>
+                                <option value="6">6° Año</option>
+                                <option value="7">7° Año</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="division">División</label>
+                            <select id="division">
+                                <option value="">Seleccionar división</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="especialidad">Especialidad</label>
+                            <select id="especialidad">
+                                <option value="">Seleccionar especialidad</option>
+                                <option value="Electrónica">Electrónica</option>
+                                <option value="Informática">Informática</option>
+                                <option value="Construcciones">Construcciones</option>
+                                <option value="Química">Química</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono">
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('modalEstudiante')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Materia Previa -->
+    <div id="modalMateria" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="tituloModalMateria">Nueva Materia Previa</h3>
+                <span class="close" onclick="closeModal('modalMateria')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="formMateria">
+                    <input type="hidden" id="materiaId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dniEstudiante">DNI Estudiante *</label>
+                            <input type="text" id="dniEstudiante" required maxlength="8" pattern="[0-9]*" onblur="buscarEstudiante()">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombreEstudiante">Nombre del Estudiante</label>
+                            <input type="text" id="nombreEstudiante" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombreMateria">Materia *</label>
+                            <input type="text" id="nombreMateria" required placeholder="Ej: Matemática, Lengua, Historia...">
+                        </div>
+                        <div class="form-group">
+                            <label for="añoMateria">Año de la Materia *</label>
+                            <select id="añoMateria" required>
+                                <option value="">Seleccionar año</option>
+                                <option value="1">1° Año</option>
+                                <option value="2">2° Año</option>
+                                <option value="3">3° Año</option>
+                                <option value="4">4° Año</option>
+                                <option value="5">5° Año</option>
+                                <option value="6">6° Año</option>
+                                <option value="7">7° Año</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fechaRegistro">Fecha de Registro *</label>
+                            <input type="date" id="fechaRegistro" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estadoMateria">Estado *</label>
+                            <select id="estadoMateria" required>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="aprobada">Aprobada</option>
+                                <option value="desaprobada">Desaprobada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" rows="3" placeholder="Observaciones adicionales..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('modalMateria')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alertas -->
+    <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 1001;"></div>
+
+    <script>
+        // Variables globales
+        let estudiantes = [];
+        let materiasPrevias = [];
+        let editandoEstudiante = null;
+        let editandoMateria = null;
+
+        // Datos de ejemplo para demostración
+        const datosEjemplo = {
+            estudiantes: [
+                {
+                    id: 1,
+                    dni: '12345678',
+                    apellido: 'García',
+                    nombre: 'Juan Carlos',
+                    curso: '4',
+                    division: 'A',
+                    especialidad: 'Electrónica',
+                    email: 'juan.garcia@email.com',
+                    telefono: '11-1234-5678'
+                },
+                {
+                    id: 2,
+                    dni: '87654321',
+                    apellido: 'Rodríguez',
+                    nombre: 'María Elena',
+                    curso: '5',
+                    division: 'B',
+                    especialidad: 'Informática',
+                    email: 'maria.rodriguez@email.com',
+                    telefono: '11-8765-4321'
+                }
+            ],
+            materias: [
+                {
+                    id: 1,
+                    dniEstudiante: '12345678',
+                    nombreMateria: 'Matemática',
+                    añoMateria: '3',
+                    fechaRegistro: '2024-03-15',
+                    estado: 'pendiente',
+                    observaciones: 'Debe rendir examen en julio'
+                },
+                {
+                    id: 2,
+                    dniEstudiante: '87654321',
+                    nombreMateria: 'Lengua y Literatura',
+                    añoMateria: '4',
+                    fechaRegistro: '2024-02-10',
+                    estado: 'aprobada',
+                    observaciones: 'Aprobada en mesa de febrero'
+                }
+            ]
+        };
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatosEjemplo();
+            actualizarEstadisticas();
+            renderEstudiantes();
+            renderMaterias();
+            
+            // Configurar fecha actual en el formulario
+            document.getElementById('fechaRegistro').valueAsDate = new Date();
+            
+            // Validación de DNI solo números
+            document.getElementById('dni').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            
+            document.getElementById('dniEstudiante').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+
+        // Cargar datos de ejemplo
+        function cargarDatosEjemplo() {
+            estudiantes = [...datosEjemplo.estudiantes];
+            materiasPrevias = [...datosEjemplo.materias];
+        }
